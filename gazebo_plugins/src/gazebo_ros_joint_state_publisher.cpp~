@@ -78,7 +78,7 @@ void GazeboRosJointStatePublisher::Load ( physics::ModelPtr _parent, sdf::Elemen
       }
     }
 
-    this->update_rate_ = 500.0;
+    this->update_rate_ = 400.0;
     if ( !_sdf->HasElement ( "updateRate" ) ) {
         ROS_WARN ( "GazeboRosJointStatePublisher Plugin (ns = %s) missing <updateRate>, defaults to %f",
                    this->robot_namespace_.c_str(), this->update_rate_ );

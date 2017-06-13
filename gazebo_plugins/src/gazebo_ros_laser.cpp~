@@ -94,11 +94,7 @@ void GazeboRosLaser::Load(sensors::SensorPtr _parent, sdf::ElementPtr _sdf)
   else
     this->frame_name_ = this->sdf->Get<std::string>("frameName");
 		size_t tmp_pose = this->frame_name_.rfind("::");
-		std::string tmp_str;
-		if(tmp_pose == -1)
-			tmp_str = this->frame_name_.substr(0);
-		else
-			tmp_str = this->frame_name_.substr(tmp_pose+2);
+		std::string tmp_str = this->frame_name_.substr(tmp_pose+2);
 		ROS_INFO("What is in tmp_str is %s", tmp_str.c_str() );
 		this->frame_name_.assign(tmp_str);
 		ROS_INFO("What is in frame_name_ is %s", this->frame_name_.c_str() );
@@ -199,8 +195,7 @@ void GazeboRosLaser::OnScan(ConstLaserScanStampedPtr &_msg)
   // We got a new message from the Gazebo sensor.  Stuff a
   // corresponding ROS message and publish it.
   sensor_msgs::LaserScan laser_msg;
-  //laser_msg.header.stamp = ros::Time(_msg->time().sec(), _msg->time().nsec());
-	laser_msg.header.stamp = ros::Time::now();
+  laser_msg.header.stamp = ros::Time(_msg->time().sec(), _msg->time().nsec());
   laser_msg.header.frame_id = this->frame_name_;
   laser_msg.angle_min = _msg->scan().angle_min();
   laser_msg.angle_max = _msg->scan().angle_max();
